@@ -130,6 +130,8 @@ check("好きなだけ遊べる：チケット・回数の上限・🔒で開く
   check("SNS で貼ると絵と題が出る（OGP・1200×630・絶対URL）", og("og:title") && og("og:description") && og("og:image") === "https://satou-aaaaa.github.io/shogai-ikura/og.png" && og("twitter:card") === "summary_large_image" && png.readUInt32BE(16) === 1200 && png.readUInt32BE(20) === 630); }
 { const mk = readFileSync(path.join(root, "tools/make-og.cjs"), "utf8"), t = ((mk.match(/color:#123554">([\s\S]*?)<span/) || [])[1] || "").replace(/<br>/g, ""), ti = (html.match(/<title>([^<]+)<\/title>/) || [])[1] || "";
   check("og.png の絵の題（tools/make-og.cjs）がこのゲームの題と同じ（写し元の絵のまま出さない。seiho-ikura#1）", t.length > 1 && ti.includes(t + "いくら"), t + " / " + ti); }
+{ const ic = readFileSync(path.join(root, "tools/make-icons.cjs"), "utf8"), c = (ic.match(/<\/text>/) ? ic.match(/>([^<>]+)<\/text>/) : null)?.[1] || "", ti = (html.match(/<title>([^<]+)<\/title>/) || [])[1] || "";
+  check("アイコンの字（tools/make-icons.cjs）がこのゲームの題の中の字（写し元の字のまま出さない。jishin-ikura#1）", c.length >= 1 && ti.includes(c), c + " / " + ti); }
 { const fy = readFileSync(path.join(root, ".github/ISSUE_TEMPLATE/feedback.yml"), "utf8");
   check("感想フォームの name が3字以上（2字だとフォームが出ない。shared-workflows incidents/2026-11-05-feedback-form-not-shown.md）", [...((fy.match(/^name:\s*(.+)$/m) || [])[1] || "").trim()].length >= 3);
   check("感想フォームは名前・メールを聞かない", /id: fun/.test(fy) && !/id: (name|email|mail)/.test(fy) && /labels: \["感想"\]/.test(fy)); }
