@@ -15,7 +15,7 @@ const K = require(path.join(__dirname, "..", "data.js"));
       <div style="font-size:36px;margin-top:14px">27万・40万<br>・75万円</div>
     </div>
     <div style="flex:1;background:#fffdf7;border:4px solid #1d2a3f;border-radius:8px;overflow:hidden">
-      <div style="font-size:30px;font-weight:700;padding:22px 20px 6px">🧾同居の子が<br>身体障害者手帳1級</div>
+      <div style="font-size:30px;font-weight:700;padding:22px 20px 6px">🧾同居の子（扶養親族）が<br>身体障害者手帳1級</div>
       <div style="display:flex;flex-direction:column;gap:10px;padding:16px">${line("270,000円")}${line("750,000円", 1)}${line("400,000円")}</div>
     </div>
   </div></body>`);

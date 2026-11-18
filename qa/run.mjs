@@ -29,7 +29,8 @@ const qcat = (role, t) => {
   if (role !== "本人" && !/（(16歳未満の)?扶養親族）|（同一生計配偶者）/.test(t)) return "?";
   const sp = /身体障害者手帳[12]級|精神障害者保健福祉手帳1級|重度の知的障害者|特別障害者に準ずる|寝たきり/.test(t);
   const ip = /身体障害者手帳[3-6]級|精神障害者保健福祉手帳[23]級|知的障害者と判定された（重度ではない）|障害者に準ずる/.test(t);
-  if (sp) return role !== "本人" && /^同居の/.test(t) ? "dokyo" : "toku";
+  // 家族の特別障害者は、同居か・施設か・ひとり暮らしかを文に書く（「別居」だけでは配偶者などと同居して75万円になる場合と分けられない）
+  if (sp) return role === "本人" ? "toku" : /^同居の/.test(t) ? "dokyo" : /施設に入所|ひとり暮らし/.test(t) ? "toku" : "?";
   return ip ? "ippan" : "?";
 };
 const qgrp = (cats) => { const c = cats.filter((x) => x !== "none"); return c.length >= 2 ? "awase" : c.length === 1 ? c[0] : "none"; };
